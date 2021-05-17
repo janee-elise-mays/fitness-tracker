@@ -1,7 +1,7 @@
 {
   "name": "mongoose_skeleton",
   "version": "1.0.0",
-  "description": "",
+  "description": "A workout tracker which allows user to add exercises and view stats of workouts.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -13,7 +13,17 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.3",
+    "mongodb": "^3.6.6",
     "mongoose": "^5.3.16",
     "morgan": "^1.9.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/janee-elise-mays/fitness-tracker.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/janee-elise-mays/fitness-tracker/issues"
+  },
+  "homepage": "https://github.com/janee-elise-mays/fitness-tracker#readme"
 }
