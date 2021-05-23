@@ -2,10 +2,10 @@ const router = require("express").Router();
 const Workout = require("../models/workout.js");
 
 
-router.post("/api/workouts", (req, res) => {
-    Workout.create(req.body)
-    .then((workout) => {
-        res.status(200).json(workout);
+router.post("/api/workouts", ({ body }, res) => {
+    Workout.create(body)
+    .then((dbWorkout) => {
+        res.status(200).json(dbWorkout);
     })
     .catch((err) => {
         res.status(400).json(err.message);
@@ -14,11 +14,11 @@ router.post("/api/workouts", (req, res) => {
 
 router.put("/api/workouts/:id", (req, res) => {
     Workout.findOneAndUpdate({_id: req.params.id},
-        {$push: {exercises: body}},
+        {$push: {exercises: req.body}},
         {new:true}
      )
-        .then((workout) => {
-            res.status(200).json(workout);
+        .then((dbWorkout) => {
+            res.status(200).json(dbWorkout);
         })
         .catch((err) => {
             res.status(400).json(err.message);
