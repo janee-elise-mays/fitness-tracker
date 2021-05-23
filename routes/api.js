@@ -11,7 +11,7 @@ router.post("/api/workouts", ({ body }, res) => {
         res.status(400).json(err.message);
     });
 });
-// Currently throwing a 400(Bad Request) **NEEDS CORRECTED
+
 router.put("/api/workouts/:id", (req, res) => {
     Workout.findOneAndUpdate({_id: req.params.id},
         {$push: {exercises: req.body}},
@@ -26,11 +26,13 @@ router.put("/api/workouts/:id", (req, res) => {
 });
 
 router.get("/api/workouts", (req, res) => {
-// The Mongoose Aggregate constructor
+// Aggregate constructor used for building aggregation pipelines.
     Workout.aggregate([
-        // Parameters
-    {$addFields: {
-        totalDuration: {$sum: "$exercise.duration"},
+// Adds new fields to documents. $addFields outputs documents that contain all existing fields from the input documents and newly added fields.
+    {
+        $addFields: {
+// Calculates and returns the sum of numeric values. $sum ignores non-numeric values.
+        totalDuration: { $sum: "$exercise.duration"},
     },
     },
 ])
@@ -43,11 +45,14 @@ router.get("/api/workouts", (req, res) => {
 });
 
 router.get("/api/workouts/range", (req, res) => {
- // The Mongoose Aggregate constructor
- Workout.aggregate([
-    // Parameters
-    {$sort: {day: -1}},
-    {$addFields: {totalDuration: {$sum: "$exercise.duration"}}}
+// Aggregate constructor used for building aggregation pipelines.
+    Workout.aggregate([  
+        {$sort: {day: -1}},
+        {
+// Adds new fields to documents. $addFields outputs documents that contain all existing fields from the input documents and newly added fields.
+        $addFields: {
+// Calculates and returns the sum of numeric values. $sum ignores non-numeric values.
+            totalDuration: {$sum: "$exercise.duration"}}}
  ])
     .then((dbWorkout) => {
     res.status(200).json(dbWorkout);
