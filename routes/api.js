@@ -11,7 +11,7 @@ router.post("/api/workouts", ({ body }, res) => {
         res.status(400).json(err.message);
     });
 });
-
+// Currently throwing a 400(Bad Request) **NEEDS CORRECTED
 router.put("/api/workouts/:id", (req, res) => {
     Workout.findOneAndUpdate({_id: req.params.id},
         {$push: {exercises: req.body}},
@@ -49,16 +49,6 @@ router.get("/api/workouts", (req, res) => {
     })
     .catch((err) => {
         res.status(400).json(err.message);
-    });
-});
-
-router.post("/api/workouts", ({ body }, res) => {
-    Workout.create(body)
-    .then(Workout => {
-        res.status(200).json(Workout);
-    })
-    .catch((err) => {
-         res.status(400).json(err.message);
     });
 });
 
