@@ -29,7 +29,7 @@ router.get("/api/workouts", (req, res) => {
 // The Mongoose Aggregate constructor
     Workout.aggregate([
         // Parameters
-    {$add: {
+    {$addFields: {
         totalDuration: {$sum: "$exercise.duration"},
     },
     },
@@ -42,10 +42,15 @@ router.get("/api/workouts", (req, res) => {
     });
 });
 
-router.get("/api/workouts", (req, res) => {
-    Workout.find({})
-    .then((workout) => {
-    res.status(200).json(workout);
+router.get("/api/workouts/range", (req, res) => {
+ // The Mongoose Aggregate constructor
+ Workout.aggregate([
+    // Parameters
+    {$sort: {day: -1}},
+    {$addFields: {totalDuration: {$sum: "$exercise.duration"}}}
+ ])
+    .then((dbWorkout) => {
+    res.status(200).json(dbWorkout);
     })
     .catch((err) => {
         res.status(400).json(err.message);
